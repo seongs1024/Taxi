@@ -1,5 +1,5 @@
 [package]
-name = "Taxi"
+name = "taxi"
 version = "0.1.0"
 authors = ["seongs1024 <seongs1024@gmail.com>"]
 edition = "2018"

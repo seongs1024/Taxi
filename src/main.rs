@@ -1,3 +1,9 @@
+mod environment;
+
+use crate::environment::Env;
+
 fn main() {
-    println!("Hello, world!");
+    let mut env = Env::default();
+    
+    println!("{}", env);
 }
