@@ -20,6 +20,7 @@ impl fmt::Display for Tile {
         })
     }
 }
+
 pub struct Env {
     pub width: usize,
     pub height: usize,
@@ -29,16 +30,18 @@ pub struct Env {
 
 impl fmt::Display for Env {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.tiles.iter()
-            .for_each(|v| {
-                v.iter().for_each(|e| match e {
-                    Some(e) => print!("{}", e),
-                    None => print!("-"),
-                });
-                println!();
-            });
-        write!(f, "WIDTH: {}, HEIGHT: {}", self.width, self.height)
-    }
+        write!(f, "{}", self.tiles.iter()
+            .map(|v| { v.iter()
+                .map(|e| match e {
+                    Some(e) => format!("{:2}", e),
+                    None => format!("{:2}", "-"),
+                })
+                .collect::<String>()
+            })
+            .collect::<Vec<String>>()
+            .join("\n")
+        )
+   }
 }
 
 impl Default for Env {
