@@ -2,7 +2,7 @@ use std::fmt;
 use rand::Rng;
 use rand::distributions::{Distribution, Standard};
 
-pub enum Action {
+enum Action {
     North,
     South,
     East,

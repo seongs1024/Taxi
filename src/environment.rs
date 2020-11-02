@@ -5,7 +5,7 @@ use rand::distributions::{Distribution, Standard};
 const DEFAULT_SIZE: usize = 5;
 
 #[derive(Clone)]
-pub enum Tile {
+enum Tile {
     R,
     G,
     B,
@@ -36,13 +36,14 @@ impl Distribution<Tile> for Standard {
 }
 
 pub struct Env {
-    pub width: usize,
-    pub height: usize,
+    width: usize,
+    height: usize,
     finished: bool,
     tiles: Vec<Vec<Option<Tile>>>,
     taxi_pos: (usize, usize),
     passenger: Tile,
     dest: Tile,
+    rewards: Reward,
 }
 
 impl fmt::Display for Env {
@@ -92,6 +93,29 @@ impl Env {
             taxi_pos: (rng.gen_range(0, width), rng.gen_range(0, height)),
             passenger: rng.gen::<Tile>(),
             dest: rng.gen::<Tile>(),
+            rewards: Reward::default(),
         }
+    }
+}
+
+struct Reward {
+    moved: f64,
+    delivered: f64,
+    missed: f64,
+}
+
+impl Reward {
+    pub fn new(movement: f64, success: f64, miss: f64) -> Self {
+        Reward {
+            moved: movement,
+            delivered: success,
+            missed: miss,
+        }
+    }
+}
+
+impl Default for Reward {
+    fn default() -> Self {
+        Self::new(-1.0, 20.0, -10.0)
     }
 }
